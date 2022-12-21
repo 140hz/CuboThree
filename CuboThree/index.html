@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+ 
+</head>
+<body>
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.147.0/three.js"></script>
+
+    <script>
+        //escena
+        var scene = new THREE.Scene();
+        scene.background = new THREE.Color("white");
+        scene.fog = new THREE.Fog("blue",01,8)
+
+        var loader = new THREE.TextureLoader();
+
+        loader.load('./carcel.jpg', function(texture){
+            scene.background = texture;
+        });
+
+        // camara
+        var camera = new THREE.PerspectiveCamera(
+            80,
+            window.innerWidth/window.innerHeight
+        
+        );
+
+
+        //render
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        
+        //geometria 
+
+        var geo = new THREE.BoxGeometry();
+        var material = new THREE.MeshBasicMaterial({
+            color:0x00ff00, 
+            //wireframe: true
+        });
+        var cube = new THREE.Mesh(geo, material);
+
+        scene.add(cube);
+
+        camera.position.z = 5;
+
+
+        //animacion
+        var animate = function(){
+            requestAnimationFrame(animate);
+
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+        
+    
+    </script>
+</body>
+</html>
